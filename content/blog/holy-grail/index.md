@@ -270,4 +270,20 @@ sufilter f=a,b amp=c,d < \[suwave]`
 
 `pbsnodes -aSj`
 
-`
+``
+
+# Fortran
+
+#### Converting integer to string for printing/writing
+
+`character(len=8) :: fmt ! format descriptor`
+
+`fmt = '(I5.5)' ! an integer of width 5 with zeros at the left`
+
+`i1= 59`
+
+`write (x1,fmt) i1 ! converting integer to string using a 'internal file'`
+
+`filename='output'//trim(x1)//'.dat'`
+
+`! ====> filename: output00059.dat`
