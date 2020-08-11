@@ -65,7 +65,7 @@ where screen number is the number you want
 
 #### ping different hosts
 
-`echo 'set i = 31 \n while( $i < 99 )\n ping -c 2 cpu0$i \n @ i######## \n end' | tcsh | grep '0 received'`
+`echo 'set i = 31 \n while( $i < 99 )\n ping -c 2 cpu0$i \n @ i++ \n end' | tcsh | grep '0 received'`
 
 # Common
 
@@ -75,11 +75,11 @@ where screen number is the number you want
 
 #### Find and move
 
-`find path_A -name '*AAA*' -exec mv -t path_B {} ####`
+`find path_A -name '*AAA*' -exec mv -t path_B {} +`
 
 #### Find files large than certain size
 
-`find ./ -size ####4G`
+`find ./ -size +4G`
 
 #### Find files/binaries that was access x mins ago
 
@@ -87,11 +87,11 @@ where screen number is the number you want
 
 #### Two ways of executing on find results (ok asks for confirmation)
 
-find ./ -exec rm {} ;find ./ -ok rm {} ;`
+``find ./ -exec rm {} ;find ./ -ok rm {} ;` ``
 
 #### Output starting from 25th line
 
-`tail -n ####25 file.log`
+`tail -n +25 file.log`
 
 #### Finding characters at the end of the line
 
@@ -103,7 +103,7 @@ find ./ -exec rm {} ;find ./ -ok rm {} ;`
 
 #### Print every 10 lines and 1 line after each of the 10 lines
 
-`sed -n "1~10, ####1p" file`
+`sed -n "1~10, +1p" file`
 
 #### Only report line numbers for grep
 
@@ -143,7 +143,7 @@ find ./ -exec rm {} ;find ./ -ok rm {} ;`
 
 #### List out unique file types in a directory
 
-`find . -type f | perl -ne 'print $1 if m/\.([^.\/]####)$/' | sort -u`
+`find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u`
 
 # SeismicUnix
 
@@ -196,6 +196,10 @@ sufilter f=a,b amp=c,d < \[suwave]`
 #### Converting CSV file to segy
 
 `a2b n1=[time steps] < [csv file] | suaddhead ns=[time steps] | sushw key=dt a=[sample rate in micro seconds] > [output file name (.su)]` `segyhdrs < [output file name (.su)]` `segywrite < [output file name (.su)] tape=[output file name (.segy)]`
+
+#### Expedite surange output
+
+`segyread tape=sample.segy | suwind count=100 | surange`
 
 # Other commands
 
