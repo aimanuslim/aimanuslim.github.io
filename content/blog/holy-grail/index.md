@@ -187,7 +187,7 @@ where screen number is the number you want
 
 #### Filter out frequency from a to b so that it's amplitude goes from c to d
 
-sufilter f=a,b amp=c,d < \[suwave]`
+`sufilter f=a,b amp=c,d < [suwave]`
 
 #### Change value of a header property
 
@@ -273,8 +273,6 @@ sufilter f=a,b amp=c,d < \[suwave]`
 #### View nodes configured under PBS
 
 `pbsnodes -aSj`
-
-``
 
 # Fortran
 
