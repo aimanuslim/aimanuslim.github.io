@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js" />
+    </script>
+
+    <title>Quran Revision and Memorization Tracker</title>
+
+    <script>
+        
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // prepare surah selection form
+            const surahJson = [
+                {
+                    "name": "سورة الفاتحة",
+                    "number": 1
+                },
+                {
+                    "name": "سورة البقرة",
+                    "number": 2
+                },
+                {
+                    "name": "سورة آل عمران",
+                    "number": 3
+                },
+                {
+                    "name": "سورة النساء",
+                    "number": 4
+                },
+                {
+                    "name": "سورة المائدة",
+                    "number": 5
+                },
+                {
+                    "name": "سورة الأنعام",
+                    "number": 6
+                },
+                {
+                    "name": "سورة الأعراف",
+                    "number": 7
+                },
+                {
+                    "name": "سورة الأنفال",
+                    "number": 8
+                },
+                {
+                    "name": "سورة التوبة",
+                    "number": 9
+                },
+                {
+                    "name": "سورة يونس",
+                    "number": 10
+                },
+                {
+                    "name": "سورة هود",
+                    "number": 11
+                },
+                {
+                    "name": "سورة يوسف",
+                    "number": 12
+                },
+                {
+                    "name": "سورة الرعد",
+                    "number": 13
+                },
+                {
+                    "name": "سورة ابراهيم",
+                    "number": 14
+                },
+                {
+                    "name": "سورة الحجر",
+                    "number": 15
+                },
+                {
+                    "name": "سورة النحل",
+                    "number": 16
+                },
+                {
+                    "name": "سورة الإسراء",
+                    "number": 17
+                },
+                {
+                    "name": "سورة الكهف",
+                    "number": 18
+                },
+                {
+                    "name": "سورة مريم",
+                    "number": 19
+                },
+                {
+                    "name": "سورة طه",
+                    "number": 20
+                },
+                {
+                    "name": "سورة الأنبياء",
+                    "number": 21
+                },
+                {
+                    "name": "سورة الحج",
+                    "number": 22
+                },
+                {
+                    "name": "سورة المؤمنون",
+                    "number": 23
+                },
+                {
+                    "name": "سورة النور",
+                    "number": 24
+                },
+                {
+                    "name": "سورة الفرقان",
+                    "number": 25
+                },
+                {
+                    "name": "سورة الشعراء",
+                    "number": 26
+                },
+                {
+                    "name": "سورة النمل",
+                    "number": 27
+                },
+                {
+                    "name": "سورة القصص",
+                    "number": 28
+                },
+                {
+                    "name": "سورة العنكبوت",
+                    "number": 29
+                },
+                {
+                    "name": "سورة الروم",
+                    "number": 30
+                },
+                {
+                    "name": "سورة لقمان",
+                    "number": 31
+                },
+                {
+                    "name": "سورة السجدة",
+                    "number": 32
+                },
+                {
+                    "name": "سورة الأحزاب",
+                    "number": 33
+                },
+                {
+                    "name": "سورة سبإ",
+                    "number": 34
+                },
+                {
+                    "name": "سورة فاطر",
+                    "number": 35
+                },
+                {
+                    "name": "سورة يس",
+                    "number": 36
+                },
+                {
+                    "name": "سورة الصافات",
+                    "number": 37
+                },
+                {
+                    "name": "سورة ص",
+                    "number": 38
+                },
+                {
+                    "name": "سورة الزمر",
+                    "number": 39
+                },
+                {
+                    "name": "سورة غافر",
+                    "number": 40
+                },
+                {
+                    "name": "سورة فصلت",
+                    "number": 41
+                },
+                {
+                    "name": "سورة الشورى",
+                    "number": 42
+                },
+                {
+                    "name": "سورة الزخرف",
+                    "number": 43
+                },
+                {
+                    "name": "سورة الدخان",
+                    "number": 44
+                },
+                {
+                    "name": "سورة الجاثية",
+                    "number": 45
+                },
+                {
+                    "name": "سورة الأحقاف",
+                    "number": 46
+                },
+                {
+                    "name": "سورة محمد",
+                    "number": 47
+                },
+                {
+                    "name": "سورة الفتح",
+                    "number": 48
+                },
+                {
+                    "name": "سورة الحجرات",
+                    "number": 49
+                },
+                {
+                    "name": "سورة ق",
+                    "number": 50
+                },
+                {
+                    "name": "سورة الذاريات",
+                    "number": 51
+                },
+                {
+                    "name": "سورة الطور",
+                    "number": 52
+                },
+                {
+                    "name": "سورة النجم",
+                    "number": 53
+                },
+                {
+                    "name": "سورة القمر",
+                    "number": 54
+                },
+                {
+                    "name": "سورة الرحمن",
+                    "number": 55
+                },
+                {
+                    "name": "سورة الواقعة",
+                    "number": 56
+                },
+                {
+                    "name": "سورة الحديد",
+                    "number": 57
+                },
+                {
+                    "name": "سورة المجادلة",
+                    "number": 58
+                },
+                {
+                    "name": "سورة الحشر",
+                    "number": 59
+                },
+                {
+                    "name": "سورة الممتحنة",
+                    "number": 60
+                },
+                {
+                    "name": "سورة الصف",
+                    "number": 61
+                },
+                {
+                    "name": "سورة الجمعة",
+                    "number": 62
+                },
+                {
+                    "name": "سورة المنافقون",
+                    "number": 63
+                },
+                {
+                    "name": "سورة التغابن",
+                    "number": 64
+                },
+                {
+                    "name": "سورة الطلاق",
+                    "number": 65
+                },
+                {
+                    "name": "سورة التحريم",
+                    "number": 66
+                },
+                {
+                    "name": "سورة الملك",
+                    "number": 67
+                },
+                {
+                    "name": "سورة القلم",
+                    "number": 68
+                },
+                {
+                    "name": "سورة الحاقة",
+                    "number": 69
+                },
+                {
+                    "name": "سورة المعارج",
+                    "number": 70
+                },
+                {
+                    "name": "سورة نوح",
+                    "number": 71
+                },
+                {
+                    "name": "سورة الجن",
+                    "number": 72
+                },
+                {
+                    "name": "سورة المزمل",
+                    "number": 73
+                },
+                {
+                    "name": "سورة المدثر",
+                    "number": 74
+                },
+                {
+                    "name": "سورة القيامة",
+                    "number": 75
+                },
+                {
+                    "name": "سورة الانسان",
+                    "number": 76
+                },
+                {
+                    "name": "سورة المرسلات",
+                    "number": 77
+                },
+                {
+                    "name": "سورة النبإ",
+                    "number": 78
+                },
+                {
+                    "name": "سورة النازعات",
+                    "number": 79
+                },
+                {
+                    "name": "سورة عبس",
+                    "number": 80
+                },
+                {
+                    "name": "سورة التكوير",
+                    "number": 81
+                },
+                {
+                    "name": "سورة الإنفطار",
+                    "number": 82
+                },
+                {
+                    "name": "سورة المطففين",
+                    "number": 83
+                },
+                {
+                    "name": "سورة الإنشقاق",
+                    "number": 84
+                },
+                {
+                    "name": "سورة البروج",
+                    "number": 85
+                },
+                {
+                    "name": "سورة الطارق",
+                    "number": 86
+                },
+                {
+                    "name": "سورة الأعلى",
+                    "number": 87
+                },
+                {
+                    "name": "سورة الغاشية",
+                    "number": 88
+                },
+                {
+                    "name": "سورة الفجر",
+                    "number": 89
+                },
+                {
+                    "name": "سورة البلد",
+                    "number": 90
+                },
+                {
+                    "name": "سورة الشمس",
+                    "number": 91
+                },
+                {
+                    "name": "سورة الليل",
+                    "number": 92
+                },
+                {
+                    "name": "سورة الضحى",
+                    "number": 93
+                },
+                {
+                    "name": "سورة الشرح",
+                    "number": 94
+                },
+                {
+                    "name": "سورة التين",
+                    "number": 95
+                },
+                {
+                    "name": "سورة العلق",
+                    "number": 96
+                },
+                {
+                    "name": "سورة القدر",
+                    "number": 97
+                },
+                {
+                    "name": "سورة البينة",
+                    "number": 98
+                },
+                {
+                    "name": "سورة الزلزلة",
+                    "number": 99
+                },
+                {
+                    "name": "سورة العاديات",
+                    "number": 100
+                },
+                {
+                    "name": "سورة القارعة",
+                    "number": 101
+                },
+                {
+                    "name": "سورة التكاثر",
+                    "number": 102
+                },
+                {
+                    "name": "سورة العصر",
+                    "number": 103
+                },
+                {
+                    "name": "سورة الهمزة",
+                    "number": 104
+                },
+                {
+                    "name": "سورة الفيل",
+                    "number": 105
+                },
+                {
+                    "name": "سورة قريش",
+                    "number": 106
+                },
+                {
+                    "name": "سورة الماعون",
+                    "number": 107
+                },
+                {
+                    "name": "سورة الكوثر",
+                    "number": 108
+                },
+                {
+                    "name": "سورة الكافرون",
+                    "number": 109
+                },
+                {
+                    "name": "سورة النصر",
+                    "number": 110
+                },
+                {
+                    "name": "سورة المسد",
+                    "number": 111
+                },
+                {
+                    "name": "سورة الإخلاص",
+                    "number": 112
+                },
+                {
+                    "name": "سورة الفلق",
+                    "number": 113
+                },
+                {
+                    "name": "سورة الناس",
+                    "number": 114
+                }
+            ]
+
+
+
+            var select = document.createElement("select");
+            select.id = "surah-select"
+
+            for (var i = 0; i < surahJson.length; i++) {
+                var option = document.createElement("option");
+                option.text = surahJson[i].name + " (" + surahJson[i].number + ")";
+                option.value = surahJson[i].number;
+                select.add(option);
+            }
+
+            document.getElementById("surah-name").appendChild(select);
+
+            // create slider for range of verses
+            var surahData = { 1: 7, 2: 286, 3: 200, 4: 176, 5: 120, 6: 165, 7: 206, 8: 75, 9: 129, 10: 109, 11: 123, 12: 111, 13: 43, 14: 52, 15: 99, 16: 128, 17: 111, 18: 110, 19: 98, 20: 135, 21: 112, 22: 78, 23: 118, 24: 64, 25: 77, 26: 227, 27: 93, 28: 88, 29: 69, 30: 60, 31: 34, 32: 30, 33: 73, 34: 54, 35: 45, 36: 83, 37: 182, 38: 88, 39: 75, 40: 85, 41: 54, 42: 53, 43: 89, 44: 59, 45: 37, 46: 35, 47: 38, 48: 29, 49: 18, 50: 45, 51: 60, 52: 49, 53: 62, 54: 55, 55: 78, 56: 96, 57: 29, 58: 22, 59: 24, 60: 13, 61: 14, 62: 11, 63: 11, 64: 18, 65: 12, 66: 12, 67: 30, 68: 52, 69: 52, 70: 44, 71: 28, 72: 28, 73: 20, 74: 56, 75: 40, 76: 31, 77: 50, 78: 40, 79: 46, 80: 42, 81: 29, 82: 19, 83: 36, 84: 25, 85: 22, 86: 17, 87: 19, 88: 26, 89: 30, 90: 20, 91: 15, 92: 21, 93: 11, 94: 8, 95: 8, 96: 19, 97: 5, 98: 8, 99: 8, 100: 11, 101: 11, 102: 8, 103: 3, 104: 9, 105: 5, 106: 4, 107: 7, 108: 3, 109: 6, 110: 3, 111: 5, 112: 4, 113: 5, 114: 6 };
+
+
+
+            $("#surah-name").on("change", function () {
+                var surah = parseInt($("#surah-select").val());
+                var verseRange = [1, surahData[surah]];
+                console.log($("#range-slider"))
+                $("#range-slider").slider({
+                    range: true,
+                    min: verseRange[0],
+                    max: verseRange[1],
+                    values: [verseRange[0], verseRange[1]],
+                    slide: function (event, ui) {
+                        $("#min_range").val(ui.values[0]);
+                        $("#max_range").val(ui.values[1]);
+                        $("#range-values").html(ui.values[0] + " - " + ui.values[1]);
+                        if ($("#surah-select").val()) {
+                            $("#range-values").show();
+                        } else {
+                            $("#range-values").hide();
+                        }
+                    }
+                });
+                $("#min_range").val($("#range-slider").slider("values", 0));
+                $("#max_range").val($("#range-slider").slider("values", 1));
+            });
+        });
+
+        function clearData() {
+                // Clear the existing data
+                data = [];
+
+                // Save the updated data to localStorage
+                localStorage.setItem("quranData", JSON.stringify(data));
+
+                // Update the display
+                displayData();
+            }
+
+        function clearAndGenerateData() {
+
+
+                // Clear the existing data
+                data = [];
+
+                // Generate 100 random pieces of data
+                for (var i = 0; i < 100; i++) {
+                    // Generate a random surah name and verse number
+                    var surahNames = ["Al-Fatihah", "Al-Baqarah", "Al-Imran", "An-Nisa", "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus"];
+                    var randomSurahName = surahNames[Math.floor(Math.random() * surahNames.length)];
+                    var randomVerseNumber = Math.floor(Math.random() * 286) + 1;
+
+                    // Generate a random revision/memorization type and date
+                    var revisionTypes = ["Revision", "Memorization"];
+                    var randomRevisionType = revisionTypes[Math.floor(Math.random() * revisionTypes.length)];
+                    var randomRevisionDate = new Date();
+                    randomRevisionDate.setDate(randomRevisionDate.getDate() - Math.floor(Math.random() * 365));
+
+                    // Add the new entry to the data array
+                    data.push({ surahName: randomSurahName, verseNumber: randomVerseNumber, revisionType: randomRevisionType, revisionDate: randomRevisionDate.toLocaleDateString() });
+                }
+
+                // Save the updated data to localStorage
+                localStorage.setItem("quranData", JSON.stringify(data));
+
+                // Update the display
+                displayData();
+            }
+
+        // Function to show a random memorized verse that has not been revised for the longest time
+        function showRandomUnrevisedVerse() {
+                // Get an array of all the memorized verses
+                var memorizedVerses = data.filter(entry => entry.revisionType == "Memorization");
+
+                // Get the current date
+                var currentDate = new Date();
+
+                // Sort the memorized verses by their last revision date, with the oldest unrevised verses first
+                memorizedVerses.sort(function (a, b) {
+                    var aLastRevision = new Date(a.revisionDate || a.memorizationDate);
+                    var bLastRevision = new Date(b.revisionDate || b.memorizationDate);
+                    return currentDate - bLastRevision - (currentDate - aLastRevision);
+                });
+
+                // Get the top 5 memorized verses that have not been revised for the longest time
+                var topUnrevisedVerses = memorizedVerses.slice(0, 5);
+
+                // Get a random verse from the top unrevised verses
+                var randomUnrevisedVerse = topUnrevisedVerses[Math.floor(Math.random() * topUnrevisedVerses.length)];
+
+                // Display the random unrevised verse
+                alert("Here's a random memorized verse that has not been revised for the longest time:\n\n" +
+                    "Surah: " + randomUnrevisedVerse.surahName + "\n" +
+                    "Verse Number: " + randomUnrevisedVerse.verseNumber);
+            }
+
+        // Retrieve saved data from localStorage, or initialize a new array if no data exists
+        var data = JSON.parse(localStorage.getItem("quranData")) || [];
+
+        // Function to add a new revision or memorization entry
+        function addEntry() {
+            // Get the input values
+            var surahName = document.getElementById("surahName").value;
+            var verseNumber = document.getElementById("verseNumber").value;
+            var revisionType = document.querySelector('input[name="revisionType"]:checked').value;
+            var revisionDate = new Date().toLocaleDateString(); // Get the current date
+            var revisionDate = document.getElementById("revisionDate").value;
+
+
+            // Add the entry to the data array
+            data.push({ surahName: surahName, verseNumber: verseNumber, revisionType: revisionType, revisionDate: revisionDate });
+
+            // Save the updated data to localStorage
+            localStorage.setItem("quranData", JSON.stringify(data));
+
+            // Update the display
+            displayData();
+
+        }
+
+        // Function to display the stored data
+        function displayData() {
+            if ($.fn.DataTable.isDataTable('#data')) {
+                // The table has already been initialized, so destroy the existing DataTable instance
+                $('#data').DataTable().destroy();
+            }
+
+            var table = $('#data').DataTable({
+                data: data,
+                columns: [
+                    { data: 'surahName' },
+                    { data: 'verseNumber' },
+                    { data: 'revisionType' },
+                    { data: 'revisionDate' }
+                ],
+                order: [[3, 'desc']] // Sort by the revisionDate column, in descending order
+            });
+
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <h1>Quran Revision and Memorization Tracker</h1>
+    <p>
+    <div id="surah-name">
+        <label for="surahName">Surah Name/Number:</label>
+    </div>
+
+    </p>
+    <p>
+        <label for="verseNumber">Verse Number:</label>
+        <input type="text" id="verseNumber" name="verseNumber">
+        <label for="range-slider">Range:</label>
+        <div id="range-slider"></div>
+        <small id="range-values" class="form-text text-muted">1 - 7</small>
+    </p>
+    <p>
+        <label>Revision/Memorization Type:</label>
+        <input type="radio" id="revision" name="revisionType" value="Revision">
+        <label for="revision">Revision</label>
+        <input type="radio" id="memorization" name="revisionType" value="Memorization">
+        <label for="memorization">
+            Memorization
+        </label </p>
+    <p>
+        <label for="revisionDate">Revision/Memorization Date:</label>
+        <input type="date" id="revisionDate" name="revisionDate">
+    </p>
+    <p>
+        <button onclick="addEntry()">Add Entry</button>
+    </p>
+    <table id="data">
+    </table>
+    <script>
+        // Display the stored data on page load
+        displayData();
+
+    </script>
+    <p>
+        <button onclick="showRandomUnrevisedVerse()">Show Random Unrevised Verse</button>
+    </p>
+    <p>
+        <button onclick="clearAndGenerateData()">Clear and Generate Data</button>
+        <button onclick="clearData()">Clear Data</button>
+    </p>
+
+
+</body>
+
+</html>

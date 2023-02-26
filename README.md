@@ -1,1 +1,0 @@
-Well, its a blog. What do you expect.
